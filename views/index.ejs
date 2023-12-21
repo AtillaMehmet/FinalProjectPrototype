@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+  <head>
+    <img href="/" src="images/MainLogo1.jpg" class="logo-Images" alt="MainLogo">
+    <title>Welcome to <%=WebsiteName%></title>
+    <link rel="stylesheet"  type="text/css" href="/home.css" />
+  </head>
+  <body>
+    <div class="menu-container" id="menu-container">
+        <a href="about">About <%=ForumName%></a>
+        <a href="search">Search for Topics</a>
+        <a href="addtopic">Add a new Topic</a>
+        <a href="list">List Topics</a>
+    </div>
+
+    <div class="menu-button" onclick="toggleMenu()">&#9776;</div>
+
+    <div class="menu-content">
+        <h1>Welcome to <%=ForumName%></h1>
+    </div>
+    <div class="ifram-container">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/IzMnCv_lPxI?si=VtrNPUas4WLjmQ7O" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+    <script>
+      //toggle menu bar concept found and adapted from youtube
+        function toggleMenu() {
+            var menuContainer = document.getElementById("menu-container");
+            menuContainer.style.left = menuContainer.style.left === "0px" ? "-200px" : "0";
+        }
+    </script>
+</body>
+</html>
+
+
