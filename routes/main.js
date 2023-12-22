@@ -82,4 +82,38 @@ module.exports = function(app, SiteData) {
     })
       }
     });
+
+    //login
+app.get('/login', function (req,res) {
+    res.render('login.ejs', SiteData);
+    });
+
+    app.post('/loggedin', function(req, res) {
+        let sqlquery = "SELECT hashedPassword FROM userinfo WHERE username = ?"; 
+        let username = (req.sanitize(req.body.username));
+        db.query(sqlquery, username, (err, result) => {
+          if (err) {
+            return console.error(err.message);
+          }
+          else if (result.length == 0) {
+            res.send('Invalid username or password');
+          }
+          else {
+            let hashedPassword = result[0].hashedPassword;
+            const bcrypt = require('bcrypt');
+            bcrypt.compare((req.sanitize(req.body.password)), hashedPassword, function(err, result) {
+              if (err) {
+                return console.error(err.message);
+              }
+              else if (result == true) {
+                req.session.userId = req.sanitize(req.body.username);
+                res.send('You have logged in, ' + (req.sanitize(req.body.username)) + 'Welcome' + '<a href='+'./'+'>Home</a>');
+              }
+              else {
+                res.send('User Details not recognised');
+              }
+            });
+          }
+        });
+      });
 }
