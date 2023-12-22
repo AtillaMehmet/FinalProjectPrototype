@@ -1,0 +1,20 @@
+<html>
+  <head>
+    <title>Register for <%=WebsiteName%></title>
+    <link rel="stylesheet"  type="text/css" href="/main.css" />
+  </head>
+  <body>
+    <div class="register1">
+    <h1>Register for <%=WebsiteName%></h1>
+    <p><a href="/">Click here to to back to the home page</a></p>
+    <form method="POST" action="/registered">
+        <p>First name: <input id="first" type="text" name="first" value="firstname" /></p>
+        <p>Last name: <input id="last" type="text" name="last" value="lastname" /></p>
+        <p>Email: <input id="email" type="email" name="email" value="email" /></p>
+        <p>Username: <input id="username" type="text" name="username" value="username" /></p>
+        <p>Password: <input id="password" type="password" name="password" value="password" minlength="8" /></p>
+        <input type="submit" value="Register" />
+      </form>
+    </div>
+  </body>
+</html>

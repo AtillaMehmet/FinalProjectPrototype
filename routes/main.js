@@ -48,4 +48,38 @@ module.exports = function(app, SiteData) {
             res.render("listposts.ejs", newData)
          });
     });
+
+    //register below
+    app.get('/register', function (req,res) {
+        res.render('register.ejs', SiteData);                                                                     
+    });                                                                                                 
+    app.post('/registered', [check('email').isEmail()],check('password').isLength({ min: 8 }).withMessage('Your password is too short make it at least 8 characters long'), function (req, res) {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+          res.redirect('./register'); }
+      else { 
+    const bcrypt = require('bcrypt');
+    const saltRounds = 10;
+    const plainPassword = req.body.password;
+    
+    bcrypt.hash(plainPassword, saltRounds, function(err, hashedPassword) {
+        // Store hashed password in your database.
+        let sqlquery = "INSERT INTO userinfo (username, firstname, lastname, email, hashedPassword) VALUES (?,?,?,?,?)";
+        // execute sql query
+        let newrecord = [req.sanitize(req.body.username), req.sanitize(req.body.first),req.sanitize(req.body.last), req.sanitize(req.body.email),hashedPassword];
+        db.query(sqlquery, newrecord, (err, result) => {
+          if (err) {
+            return res.status(500).send('username taken try again.');
+          }
+          if (result.length > 0) {
+            return res.send('User already taken try again');
+        }
+          else{
+          result = 'Hello '+ req.sanitize(req.body.first) + ' '+ req.sanitize(req.body.last) +' you are now registered!  We will send an email to you at ' + req.sanitize(req.body.email);
+          res.send(result);
+        }
+          });
+    })
+      }
+    });
 }
