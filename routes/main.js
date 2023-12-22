@@ -32,7 +32,7 @@ module.exports = function(app, SiteData) {
                return console.error(err.message);
              }
              else
-             res.send(' <a href=' + './' + '>Home</a> This post is added to the posts: '+ req.sanitize(req.body.name) + 'description:' + req.sanitize(req.body.description) + 'requirements:' + req.sanitize(req.body.requirements) + 'looking for:' + req.sanitize(req.body.lookingfor) + 'time frame:' + req.sanitize(req.body.timeframe) + ' start date '+ req.sanitize(req.body.startdate));
+             res.send(' <a href=' + './' + '>Home</a> This is added to posts Thanks for the post: '+ req.sanitize(req.body.name) + 'description:' + req.sanitize(req.body.description) + 'requirements:' + req.sanitize(req.body.requirements) + 'looking for:' + req.sanitize(req.body.lookingfor) + 'time frame in weeks:' + req.sanitize(req.body.timeframe) + ' start date in weeks'+ req.sanitize(req.body.startdate));
              });
        });    
 

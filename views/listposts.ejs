@@ -15,7 +15,7 @@
         <h2>Posts:</h2>
         <ul>
             <% AddedPosts.forEach(function(groupposts) { %>
-                <li><%= groupposts.name %>, <%= groupposts.description %>,  <%=groupposts.requirements%> RP, <%=groupposts.lookingfor%> Time Frame in Weeks:<%= groupposts.timeframe %> Start Date in weeks:<%= groupposts.startdate %></li>
+                <li><%= groupposts.name %>, <%= groupposts.description %>,  <%=groupposts.requirements%> RP, <%=groupposts.lookingfor%> Desired end date:<%= groupposts.timeframe %> Start Date:<%= groupposts.startdate %></li>
             <% }) %>
         </ul>
       </div>
