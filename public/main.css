@@ -22,3 +22,66 @@
     background-color: #f9f9f9;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
+  .menu-container {
+    position: fixed;
+    top: 0;
+    left: -200px;
+    width: 200px;
+    height: 100%;
+    background: #333;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.menu-container a {
+    padding: 15px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.menu-container a:hover {
+    color: #f1f1f1;
+}
+
+.menu-button {
+    font-size: 30px;
+    cursor: pointer;
+    color: #818181;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+}
+
+.menu-content {
+    margin-left: 260px;
+    padding: 20px;
+}
+
+@media screen and (max-width: 600px) {
+    .menu-container {
+        width: 100%;
+    }
+    .menu-content {
+        margin-left: 0;
+    }
+}
+
+.iframe-container{
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; 
+    height: 0;
+  }
+  .iframe-container iframe{
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding-left: 500px;
+    
+  }

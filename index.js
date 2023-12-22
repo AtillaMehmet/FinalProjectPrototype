@@ -15,6 +15,20 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 // Set up css
 app.use(express.static(__dirname + '/public'));
+// Create an input sanitizer
+app.use(expressSanitizer());
+
+
+// Create a session
+app.use(session({
+    secret: 'somerandomstuff',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        expires: 600000
+    }
+}));
+//code added above
 
 // Define the database connection
 const db = mysql.createConnection ({

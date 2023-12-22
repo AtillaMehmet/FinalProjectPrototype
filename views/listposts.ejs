@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Welcome to <%=WebsiteName%></title>
+    <link rel="stylesheet"  type="text/css" href="/list.css" />
+  </head>
+ <body>
+    <header>
+        <h1><%=WebsiteName%> Shop</h1>
+        <p><a href="/">Click here to to back to the home page</a></p>
+    </header>
+
+    <main>
+      <div class="posts-page">
+        <h2>Posts:</h2>
+        <ul>
+            <% AddedPosts.forEach(function(groupposts) { %>
+                <li><%= groupposts.name %>, <%= groupposts.description %>,  <%=groupposts.requirements%> RP, <%=groupposts.lookingfor%> Time Frame in Weeks:<%= groupposts.timeframe %> Start Date in weeks:<%= groupposts.startdate %></li>
+            <% }) %>
+        </ul>
+      </div>
+    </main>
+</body>
+</html>
