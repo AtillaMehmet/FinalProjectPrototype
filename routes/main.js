@@ -116,4 +116,25 @@ app.get('/login', function (req,res) {
           }
         });
       });
+//search
+      app.get('/search',function(req,res){
+        res.render("search.ejs", SiteData);
+    });
+    app.get('/search-result', function (req, res) {
+        //searching in the database
+        const keyword = '%' +  req.query.keyword + '%';
+
+        const query = 'SELECT * FROM groupfinder WHERE description LIKE %';
+        // execute sql query
+        db.query(query, [keyword, keyword, keyword, keyword, keyword], (err, availableItems) => {
+            if (err) {
+              console.error('Error executing the search query:', err);
+              res.status(500).send('Internal Server Error');
+              return; 
+            }
+            let newData = Object.assign({}, SiteData, {availableItems:availableItems});
+            console.log(newData)
+            res.render("searchresults.ejs", newData)
+         });        
+    });
 }
