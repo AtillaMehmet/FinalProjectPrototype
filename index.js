@@ -67,3 +67,22 @@ require("./routes/main")(app, SiteData);
 
 // Start the web app listening
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+
+const {NlpManager} = require('node-nlp')
+const manager = new NlpManager(({languages: ['en']}))
+
+manager.addDocument('en', 'hello', 'greeting');
+manager.addDocument('en', 'hi', 'greeting');
+manager.addDocument('en', 'hey you', 'greeting');
+manager.addDocument('en', 'yo', 'greeting');
+manager.addDocument('en', 'good morning', 'greeting');
+manager.addDocument('en', 'good afternoon', 'greeting');
+// add answers
+manager.addAnswer('en', 'greeting', 'Hey!');
+ manager.addAnswer('en', 'greeting', 'Hey there');
+  manager.addAnswer('en', 'greeting', 'Hi');
+   manager.addAnswer('en', 'greeting', 'Yo whatsup');
+// train model
+manager.train().then(() => {
+manager.save();
+})
