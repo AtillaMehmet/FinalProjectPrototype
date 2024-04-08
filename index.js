@@ -83,6 +83,9 @@ manager.addAnswer('en', 'greeting', 'Hey!');
   manager.addAnswer('en', 'greeting', 'Hi');
    manager.addAnswer('en', 'greeting', 'Yo whatsup');
 // train model
-manager.train().then(() => {
+manager.train().then(async() => {
 manager.save();
+//test response change after en for language to the input so we can see if there is a response and how it rates it as and what the tag is e.g. greeting or future adding stuff like languages/courses/interests
+let response = await manager.process('en', 'asdas');
+console.log(response)
 })
