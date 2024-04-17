@@ -24,9 +24,9 @@ module.exports = function(app, SiteData) {
  
      app.post('/postadded', function (req,res) {
            // saving data in database
-           let sqlquery = "INSERT INTO groupfinder (name,description,requirements,lookingfor,timeframe,startdate) VALUES (?,?,?,?,?,?)";
+           let sqlquery = "INSERT INTO groupfinder (name,description,requirements,lookingfor,timeframe,startdate,group_size) VALUES (?,?,?,?,?,?,?)";
            // execute sql query
-           let newrecord = [req.sanitize(req.body.name), req.sanitize(req.body.description),req.sanitize(req.body.requirements), req.sanitize(req.body.lookingfor),req.sanitize(req.body.timeframe),req.sanitize(req.body.startdate)];
+           let newrecord = [req.sanitize(req.body.name), req.sanitize(req.body.description),req.sanitize(req.body.requirements), req.sanitize(req.body.lookingfor),req.sanitize(req.body.timeframe),req.sanitize(req.body.startdate),req.sanitize(req.body.group_size)];
            db.query(sqlquery, newrecord, (err, result) => {
              if (err) {
                return console.error(err.message);
@@ -36,7 +36,7 @@ module.exports = function(app, SiteData) {
              });
        });    
 
-       app.get('/listposts', function(req, res) {
+       app.get('/listposts',redirectLogin, function(req, res) {
         let sqlquery = "SELECT * FROM groupfinder"; 
         // execute sql query
         db.query(sqlquery, (err, result) => {
@@ -116,25 +116,136 @@ app.get('/login', function (req,res) {
           }
         });
       });
-//search
-      app.get('/search',function(req,res){
-        res.render("search.ejs", SiteData);
-    });
-    app.get('/search-result', function (req, res) {
-        //searching in the database
-        const keyword = '%' +  req.query.keyword + '%';
 
-        const query = 'SELECT * FROM groupfinder WHERE description LIKE %';
-        // execute sql query
-        db.query(query, [keyword, keyword, keyword, keyword, keyword], (err, availableItems) => {
-            if (err) {
-              console.error('Error executing the search query:', err);
-              res.status(500).send('Internal Server Error');
-              return; 
-            }
-            let newData = Object.assign({}, SiteData, {availableItems:availableItems});
-            console.log(newData)
-            res.render("searchresults.ejs", newData)
-         });        
-    });
+
+//search
+app.get('/search-result', [check('keyword').isLength({ min: 1 })], function(req, res) {
+  const searchKeyword = req.query.keyword;  // Assuming keyword is passed as a query parameter
+  if (!searchKeyword) {
+      res.status(400).send("Keyword is required.");
+      return;
+  }
+
+  let query = 'SELECT * FROM groupfinder WHERE lookingfor LIKE ?';// Ensure correct column name 'lookingfor'
+  const keysearch = `%${searchKeyword}%`;  // Correct usage of template literals
+
+  console.log("Final SQL Query:", query);
+  console.log("Using search keyword: ", keysearch);
+
+  db.query(query, [keysearch], (err, availableItems) => {
+      if (err) {
+          console.error('Error executing the search query:', err);
+          res.status(500).send('Internal Server Error');
+          return;
+      }
+      let newData = Object.assign({}, SiteData, { availableItems: availableItems });
+      console.log("Query results: ", newData);
+      res.render("searchresults.ejs", newData);
+  });
+});
+//delete user
+app.get('/removeuser', redirectLogin, function (req, res) {
+  res.render('removeuser.ejs', SiteData);
+});
+app.post('/removeuser', redirectLogin, function (req, res) {
+  const userremoval = req.sanitize(req.body.username);
+
+  // Perform the deletion in the database only works with username need to find a way to make it work with pasword.
+  const deleteQuery = "DELETE FROM userinfo WHERE username = ?";
+  db.query(deleteQuery, [userremoval], (err, result) => {
+      if (err) {
+          console.log('Error did not remove user:', err);
+          res.status(500).send('Internal Server Error');
+      } else {
+          console.log('Result:', result);
+
+          if (result.affectedRows > 0) {
+              console.log('Removed the user succesfully');
+              res.send('The user corresponding to the username give has been successfully removed. <a href=' + './' + '>Home</a>');
+          } else {
+              console.log('User not found');
+              res.send('Please try a different username this user was not found. Check capitilization and any other variables before trying again or check the listusers page. <a href=' + './' + '>Home</a>');
+          }
+      }
+  });
+});
+
+//logout
+//logout
+app.get('/logout', redirectLogin, (req,res) => {
+  req.session.destroy(err => {
+  if (err) {
+    return res.redirect('./')
+  }
+  res.send('you are now logged out. <a href='+'./'+'>Home</a>');
+  })
+})
+
+
+
+//test api
+const request = require('request');
+app.get('/aichatbotapi', function(req, res) {
+const options = {
+  method: 'POST',
+  url: 'https://cheapest-gpt-4-turbo-gpt-4-vision-chatgpt-openai-ai-api.p.rapidapi.com/v1/chat/completions',
+  headers: {
+    'content-type': 'application/json',
+    'X-RapidAPI-Key': '36671203c3msh275b5c1bca224b5p1c4565jsn99c93937b3da',
+    'X-RapidAPI-Host': 'cheapest-gpt-4-turbo-gpt-4-vision-chatgpt-openai-ai-api.p.rapidapi.com'
+  },
+  body: {
+    messages: [
+      {
+        role: 'user',
+        content: 'Hello, how is it going?'
+      }
+    ],
+    model: 'gpt-4-turbo-preview',
+    max_tokens: 200,
+    temperature: 0.9
+  },
+  json: true
+};
+
+request(options, function (error, response, body) {
+	if (error) throw new Error(error);
+
+	console.log(body);
+});
+
+});
+
+app.post('/aichatbotapi', function(req, res) {
+  // Extract data from the request body
+  const { role, content } = req.body;
+
+  const options = {
+    method: 'POST',
+    url: 'https://cheapest-gpt-4-turbo-gpt-4-vision-chatgpt-openai-ai-api.p.rapidapi.com/v1/chat/completions',
+    headers: {
+      'content-type': 'application/json',
+      'X-RapidAPI-Key': '36671203c3msh275b5c1bca224b5p1c4565jsn99c93937b3da',
+      'X-RapidAPI-Host': 'cheapest-gpt-4-turbo-gpt-4-vision-chatgpt-openai-ai-api.p.rapidapi.com'
+    },
+    body: {
+      messages: [
+        {
+          role: role || 'user',
+          content: content || 'Hello, how is it going?'
+        }
+      ],
+      model: 'gpt-4-turbo-preview',
+      max_tokens: 200,
+      temperature: 0.9
+    },
+    json: true
+  };
+  res.render('index', { response: body });
+});
+
+
+
+
+
 }

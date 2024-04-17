@@ -9,3 +9,6 @@ DROP TABLE groupfinder;
 CREATE TABLE groupfinder (id INT AUTO_INCREMENT,name VARCHAR(50),description VARCHAR(250),requirements VARCHAR(250),lookingfor VARCHAR(250), timeframe DATE, startdate DATE,PRIMARY KEY(id));
 CREATE TABLE userinfo (username VARCHAR(50), firstname VARCHAR(50) NOT NULL, lastname VARCHAR(50) NOT NULL, email VARCHAR(100) NOT NULL, hashedPassword VARCHAR(255) NOT NULL, PRIMARY KEY (username));
 SELECT * FROM userinfo
+ALTER TABLE groupfinder ADD COLUMN group_size INT;
+ALTER TABLE groupfinder MODIFY COLUMN startdate DATE;
+ALTER TABLE groupfinder MODIFY COLUMN timeframe DATE;

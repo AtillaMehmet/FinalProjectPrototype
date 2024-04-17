@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+  <head>
+    <img  href="/" src="images/mainlogo1.png"  class="logo-Images" alt="MainLogo">
+    <title>Welcome to <%=WebsiteName%></title>
+    <link rel="stylesheet"  type="text/css" href="/main.css" />
+  </head>
+<body>
+    <h1>Search Results</h1>
+    <p><a href="/">Click here to to back to the home page</a></p>
+    <div>
+        <% if (availableItems && availableItems.length > 0) { %>
+            <ul>
+                <% availableItems.forEach(item => { %>
+                    <li><%= item.name %> <%= item.lookingfor %></li>
+                <% }); %>
+            </ul>
+        <% } else { %>
+            <p>No items found.</p>
+        <% } %>
+    </div>
+</body>
+</html>

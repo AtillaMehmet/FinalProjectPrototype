@@ -6,16 +6,29 @@
   </head>
  <body>
     <header>
-        <h1><%=WebsiteName%> Shop</h1>
-        <p><a href="/">Click here to to back to the home page</a></p>
+        <h1><%=WebsiteName%></h1>
+        <sh>Listed posts</sh>
+        <p><a class="hyperlink" href="/">Click here to to back to the home page</a></p>
     </header>
 
     <main>
+      
+      <!-- <div class="filtersql">
+        <form method="get" action="/sqlfilter">
+            <label for="startdate">Filter posts by start date: </label>
+            <input type="date" name="startdate" id="startdate" placeholder="yyyy-mm-dd">
+            <button type="submit">Filter</button>
+        </form>
+    </div>
+
+  -->
+
       <div class="posts-page">
         <h2>Posts:</h2>
         <ul>
             <% AddedPosts.forEach(function(groupposts) { %>
-                <li><%= groupposts.name %>, <%= groupposts.description %>,  <%=groupposts.requirements%> RP, <%=groupposts.lookingfor%> Desired end date:<%= groupposts.timeframe %> Start Date:<%= groupposts.startdate %></li>
+              
+                <li>Name: <%= groupposts.name %>, Group Size: <%= groupposts.description %>, Requirements:  <%=groupposts.requirements%> , Looking For:  <%=groupposts.lookingfor%> Desired end date:<%= groupposts.timeframe %> Start Date:<%= groupposts.startdate %></li>
             <% }) %>
         </ul>
       </div>
