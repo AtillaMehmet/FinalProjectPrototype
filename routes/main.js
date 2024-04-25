@@ -24,9 +24,12 @@ module.exports = function(app, SiteData) {
  
      app.post('/postadded', function (req,res) {
            // saving data in database
-           let sqlquery = "INSERT INTO groupfinder (name,description,requirements,lookingfor,timeframe,startdate,group_size) VALUES (?,?,?,?,?,?,?)";
+
+            const username = req.session.userId
+           let sqlquery = "INSERT INTO groupfinder (name,description,requirements,lookingfor,timeframe,startdate,group_size,username) VALUES (?,?,?,?,?,?,?,?)";
            // execute sql query
-           let newrecord = [req.sanitize(req.body.name), req.sanitize(req.body.description),req.sanitize(req.body.requirements), req.sanitize(req.body.lookingfor),req.sanitize(req.body.timeframe),req.sanitize(req.body.startdate),req.sanitize(req.body.group_size)];
+           //req.sanitize and body is fine for decription and requirements but not username or somet5hing that is being added.
+           let newrecord = [req.sanitize(req.body.name), req.sanitize(req.body.description),req.sanitize(req.body.requirements), req.sanitize(req.body.lookingfor),req.sanitize(req.body.timeframe),req.sanitize(req.body.startdate),req.sanitize(req.body.group_size),  username];
            db.query(sqlquery, newrecord, (err, result) => {
              if (err) {
                return console.error(err.message);

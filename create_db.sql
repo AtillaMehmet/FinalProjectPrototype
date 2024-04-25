@@ -12,3 +12,14 @@ SELECT * FROM userinfo
 ALTER TABLE groupfinder ADD COLUMN group_size INT;
 ALTER TABLE groupfinder MODIFY COLUMN startdate DATE;
 ALTER TABLE groupfinder MODIFY COLUMN timeframe DATE;
+
+
+-- Add the foreign key constraint to link the username column to the userinfo table
+ALTER TABLE groupfinder
+ADD column username varchar(50),
+ADD CONSTRAINT fk_username
+FOREIGN KEY (username)
+REFERENCES userinfo(username)
+ON DELETE CASCADE;
+
+SELECT * FROM groupfinder;
