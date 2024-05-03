@@ -1,0 +1,30 @@
+
+
+  <!doctype html>
+<html>
+  <head>
+    <title>Youre posts <%=WebsiteName%></title>
+    <link rel="stylesheet"  type="text/css" href="/main.css" />
+  </head>
+  <body>
+    <div class="user-posts">
+        <h2>Your Posts</h2>
+        <% if (urPosts.length > 0) { %>
+            <ul>
+                <% urPosts.forEach(function(post) { %>
+                    <li>
+                        <strong>Name:</strong> <%= post.name %><br>
+                        <strong>Description:</strong> <%= post.description %><br>
+                        <strong>Requirements:</strong> <%= post.requirements %><br>
+                        <strong>Looking For:</strong> <%= post.lookingfor %><br>
+                        <strong>Time Frame:</strong> <%= post.timeframe %><br>
+                        <strong>Start Date:</strong> <%= post.startdate %>
+                    </li>
+                <% }); %>
+            </ul>
+        <% } else { %>
+            <p>You have no posts yet.</p>
+        <% } %>
+      </div>
+  </body>
+</html>

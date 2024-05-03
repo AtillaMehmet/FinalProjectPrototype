@@ -52,6 +52,24 @@ module.exports = function(app, SiteData) {
          });
     });
 
+    //list user specific posts working
+    app.get('/urposts', redirectLogin, function(req, res) {
+    
+      const username = req.session.userId;
+      let sqlquery = "SELECT * FROM groupfinder WHERE username = ?";
+      
+      db.query(sqlquery, [username], (err, userPosts) => {
+          if (err) {
+              console.error('Error retrieving user posts:', err);
+              res.status(500).send('Internal Server Error');
+              return;
+          }
+          
+          let newData = Object.assign({}, SiteData, {urPosts: userPosts});
+          res.render("urposts.ejs", newData)
+      });
+    });
+
     //register below
     app.get('/register', function (req,res) {
         res.render('register.ejs', SiteData);                                                                     
