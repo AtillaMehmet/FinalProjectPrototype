@@ -150,26 +150,72 @@ app.get('/search-result', [check('keyword').isLength({ min: 1 })], function(req,
 app.get('/removeuser', redirectLogin, function (req, res) {
   res.render('removeuser.ejs', SiteData);
 });
+// app.post('/removeuser', redirectLogin, function (req, res) {
+//   const userremoval = req.sanitize(req.body.username);
+
+//   // Perform the deletion in the database only works with username need to find a way to make it work with pasword.
+//   const deleteQuery = "DELETE FROM userinfo WHERE username = ?";
+//   db.query(deleteQuery, [userremoval], (err, result) => {
+//       if (err) {
+//           console.log('Error did not remove user:', err);
+//           res.status(500).send('Internal Server Error');
+//       } else {
+//           console.log('Result:', result);
+
+//           if (result.affectedRows > 0) {
+//               console.log('Removed the user succesfully');
+//               res.send('The user corresponding to the username give has been successfully removed. <a href=' + './' + '>Home</a>');
+//           } else {
+//               console.log('User not found');
+//               res.send('Please try a different username this user was not found. Check capitilization and any other variables before trying again or check the listusers page. <a href=' + './' + '>Home</a>');
+//           }
+//       }
+//   });
+// });
+
+//updated user removal system
+
 app.post('/removeuser', redirectLogin, function (req, res) {
-  const userremoval = req.sanitize(req.body.username);
+  const UsernameRemoval = req.sanitize(req.body.username);
+  const PasswordCheckRemoval = req.sanitize(req.body.password);
 
-  // Perform the deletion in the database only works with username need to find a way to make it work with pasword.
-  const deleteQuery = "DELETE FROM userinfo WHERE username = ?";
-  db.query(deleteQuery, [userremoval], (err, result) => {
+  // Query to find the user's hashed password
+  let sqlQuery = "SELECT hashedPassword FROM userinfo WHERE username = ?";
+  db.query(sqlQuery, [UsernameRemoval], (err, result) => {
       if (err) {
-          console.log('Error did not remove user:', err);
-          res.status(500).send('Internal Server Error');
-      } else {
-          console.log('Result:', result);
-
-          if (result.affectedRows > 0) {
-              console.log('Removed the user succesfully');
-              res.send('The user corresponding to the username give has been successfully removed. <a href=' + './' + '>Home</a>');
-          } else {
-              console.log('User not found');
-              res.send('Please try a different username this user was not found. Check capitilization and any other variables before trying again or check the listusers page. <a href=' + './' + '>Home</a>');
-          }
+          console.error('Error with username.', err);
+          return res.status(500).send('Internal Server Error');
       }
+      if (result.length == 0) {
+          return res.send('User not found.');
+      }
+      
+      // Compare provided password with stored hashed password
+      let hashedPassword = result[0].hashedPassword;
+      const bcrypt = require('bcrypt');
+      bcrypt.compare(PasswordCheckRemoval, hashedPassword, function(err, passwordMatch) {
+          if (err) {
+              console.error('Error with password try again.', err);
+              return res.status(500).send('Internal Server Error');
+          }
+          if (!passwordMatch) {
+              return res.send('Password is incorrect try again.');
+          }
+
+          // If password matches, proceed to delete user
+          const deleteQuery = "DELETE FROM userinfo WHERE username = ?";
+          db.query(deleteQuery, [UsernameRemoval], (err, deleteResult) => {
+              if (err) {
+                  console.error('Error try again.', err);
+                  return res.status(500).send('Internal Server Error');
+              }
+              if (deleteResult.affectedRows > 0) {
+                  res.send('User successfully deleted. <a href="./">Home</a>');
+              } else {
+                  res.send('User deletion failed please try again later thanks. <a href="./">Home</a>');
+              }
+          });
+      });
   });
 });
 
