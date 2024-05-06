@@ -250,66 +250,66 @@ app.get('/logout', redirectLogin, (req,res) => {
 
 
 
-//test api
-const request = require('request');
-app.get('/aichatbotapi', function(req, res) {
-const options = {
-  method: 'POST',
-  url: 'https://cheapest-gpt-4-turbo-gpt-4-vision-chatgpt-openai-ai-api.p.rapidapi.com/v1/chat/completions',
-  headers: {
-    'content-type': 'application/json',
-    'X-RapidAPI-Key': '36671203c3msh275b5c1bca224b5p1c4565jsn99c93937b3da',
-    'X-RapidAPI-Host': 'cheapest-gpt-4-turbo-gpt-4-vision-chatgpt-openai-ai-api.p.rapidapi.com'
-  },
-  body: {
-    messages: [
-      {
-        role: 'user',
-        content: 'Hello, how is it going?'
-      }
-    ],
-    model: 'gpt-4-turbo-preview',
-    max_tokens: 200,
-    temperature: 0.9
-  },
-  json: true
-};
+// //test api
+// const request = require('request');
+// app.get('/aichatbotapi', function(req, res) {
+// const options = {
+//   method: 'POST',
+//   url: 'https://cheapest-gpt-4-turbo-gpt-4-vision-chatgpt-openai-ai-api.p.rapidapi.com/v1/chat/completions',
+//   headers: {
+//     'content-type': 'application/json',
+//     'X-RapidAPI-Key': '36671203c3msh275b5c1bca224b5p1c4565jsn99c93937b3da',
+//     'X-RapidAPI-Host': 'cheapest-gpt-4-turbo-gpt-4-vision-chatgpt-openai-ai-api.p.rapidapi.com'
+//   },
+//   body: {
+//     messages: [
+//       {
+//         role: 'user',
+//         content: 'Hello, how is it going?'
+//       }
+//     ],
+//     model: 'gpt-4-turbo-preview',
+//     max_tokens: 200,
+//     temperature: 0.9
+//   },
+//   json: true
+// };
 
-request(options, function (error, response, body) {
-	if (error) throw new Error(error);
+// request(options, function (error, response, body) {
+// 	if (error) throw new Error(error);
 
-	console.log(body);
-});
+// 	console.log(body);
+// });
 
-});
+// });
 
-app.post('/aichatbotapi', function(req, res) {
-  // Extract data from the request body
-  const { role, content } = req.body;
+// app.post('/aichatbotapi', function(req, res) {
+//   // Extract data from the request body
+//   const { role, content } = req.body;
 
-  const options = {
-    method: 'POST',
-    url: 'https://cheapest-gpt-4-turbo-gpt-4-vision-chatgpt-openai-ai-api.p.rapidapi.com/v1/chat/completions',
-    headers: {
-      'content-type': 'application/json',
-      'X-RapidAPI-Key': '36671203c3msh275b5c1bca224b5p1c4565jsn99c93937b3da',
-      'X-RapidAPI-Host': 'cheapest-gpt-4-turbo-gpt-4-vision-chatgpt-openai-ai-api.p.rapidapi.com'
-    },
-    body: {
-      messages: [
-        {
-          role: role || 'user',
-          content: content || 'Hello, how is it going?'
-        }
-      ],
-      model: 'gpt-4-turbo-preview',
-      max_tokens: 200,
-      temperature: 0.9
-    },
-    json: true
-  };
-  res.render('index', { response: body });
-});
+//   const options = {
+//     method: 'POST',
+//     url: 'https://cheapest-gpt-4-turbo-gpt-4-vision-chatgpt-openai-ai-api.p.rapidapi.com/v1/chat/completions',
+//     headers: {
+//       'content-type': 'application/json',
+//       'X-RapidAPI-Key': '36671203c3msh275b5c1bca224b5p1c4565jsn99c93937b3da',
+//       'X-RapidAPI-Host': 'cheapest-gpt-4-turbo-gpt-4-vision-chatgpt-openai-ai-api.p.rapidapi.com'
+//     },
+//     body: {
+//       messages: [
+//         {
+//           role: role || 'user',
+//           content: content || 'Hello, how is it going?'
+//         }
+//       ],
+//       model: 'gpt-4-turbo-preview',
+//       max_tokens: 200,
+//       temperature: 0.9
+//     },
+//     json: true
+//   };
+//   res.render('index', { response: body });
+// });
 
 
 
