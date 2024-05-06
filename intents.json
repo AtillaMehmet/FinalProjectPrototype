@@ -1,0 +1,267 @@
+{
+  "root": {
+    "intents": [
+      {
+        "tag": "greeting",
+        "patterns": [
+          "hello",
+          "hi",
+          "hey you",
+          "yo",
+          "good morning",
+          "good afternoon"
+        ],
+        "responses": [
+          "Hey!",
+          "Hey there",
+          "Hi",
+          "Yo whatsup"
+        ],
+        "context_set": ""
+      },
+      {
+        "tag": "python",
+        "patterns": [
+          "python",
+          "Tell me about Python",
+          "What can you tell me about Python?",
+          "I want to learn Python"
+        ],
+        "responses": [
+          "I hear that Sahil is great with python why not check out his profile.",
+          "I hear that Adam is great with python why not check out his profile.",
+          "I hear that Dan is great with python why not check out his profile.",
+          "I hear that Jamie is great with python why not visit his profile."
+        ],
+        "context_set": ""
+      },
+      {
+        "tag": "java",
+        "patterns": [
+          "java",
+          "Can you tell me about Java?",
+          "What's special about Java?",
+          "I need information about Java"
+        ],
+        "responses": [
+          "Java is widely used in applications I think Jake is good with that.",
+          "Java is widely used in applications Check the profile of Dan for a real expert.",
+          "Java is widely used in applications It is a must and joyce is great with it."
+        ],
+        "context_set": ""
+      },
+      {
+        "tag": "javascript",
+        "patterns": [
+          "javascript",
+          "What can you tell me about JavaScript?",
+          "Tell me more about JavaScript",
+          "I want to learn JavaScript"
+        ],
+        "responses": [
+          "I hear that Alex is skilled in JavaScript. Why not check out his profile?",
+          "JavaScript is powerful! Have you seen Emily's work with it?",
+          "I hear that Liam is great with JavaScript. Why not visit his profile?",
+          "JavaScript is awesome! Check out Mia's profile for some cool projects."
+        ],
+        "context_set": ""
+      },
+      {
+        "tag": "c++",
+        "patterns": [
+          "c++",
+          "What is C++?",
+          "Tell me about C++",
+          "Why should I learn C++?"
+        ],
+        "responses": [
+          "C++ is known for its performance. Have you seen Ethan's work with it?",
+          "I hear that Olivia is a C++ whiz. Why not check out her profile?",
+          "C++ is fascinating! Take a look at Noah's profile for some amazing projects.",
+          "C++ is powerful! Have you checked out Ava's profile for some inspiration?"
+        ],
+        "context_set": ""
+      },
+      {
+        "tag": "ruby",
+        "patterns": [
+          "ruby",
+          "What is Ruby?",
+          "Tell me about Ruby",
+          "Why should I learn Ruby?"
+        ],
+        "responses": [
+          "Ruby makes programming elegant. I hear Sophie is a Ruby expert. Check out her profile!",
+          "I hear that Mia is great with Ruby. Why not visit her profile?",
+          "Ruby is fantastic! Have you seen Jack's work with it?",
+          "Ruby is elegant! Check out Liam's profile for some amazing Ruby projects."
+        ],
+        "context_set": ""
+      },
+      {
+        "tag": "swift",
+        "patterns": [
+          "swift",
+          "What is Swift?",
+          "Tell me about Swift",
+          "Why should I learn Swift?"
+        ],
+        "responses": [
+          "I hear that Aiden is great with Swift. Why not check out his profile?",
+          "Swift is Apple's language for iOS development. Check out Olivia's profile for some cool iOS apps!",
+          "I hear that Isabella is skilled in Swift. Why not visit her profile?",
+          "Swift is awesome! Have you seen Ethan's iOS projects?"
+        ],
+        "context_set": ""
+      },
+      {
+        "tag": "go",
+        "patterns": [
+          "go",
+          "What is Go?",
+          "Tell me about Go",
+          "Why should I learn Go?"
+        ],
+        "responses": [
+          "Go is efficient and easy to use. I hear that Noah is great with it. Check out his profile!",
+          "I hear that Mia is proficient in Go. Why not visit her profile?",
+          "Go is powerful! Have you seen Ava's work with it?",
+          "Go is fascinating! Check out Liam's profile for some amazing projects."
+        ],
+        "context_set": ""
+      },
+      {
+        "tag": "php",
+        "patterns": [
+          "php",
+          "What is PHP?",
+          "Tell me about PHP",
+          "Why should I learn PHP?"
+        ],
+        "responses": [
+          "PHP remains popular for web development. I hear Olivia is a PHP expert. Check out her profile!",
+          "I hear that Noah is great with PHP. Why not visit his profile?",
+          "PHP is powerful! Have you checked out Mia's profile for some inspiration?",
+          "PHP is versatile! Check out Ethan's profile for some amazing PHP projects."
+        ],
+        "context_set": ""
+      },
+      {
+        "tag": "html",
+        "patterns": [
+          "html",
+          "What is HTML?",
+          "Tell me about HTML",
+          "Why should I learn HTML?"
+        ],
+        "responses": [
+          "HTML is the backbone of web pages. I hear that Ava is great with it. Check out her profile!",
+          "I hear that Liam is skilled in HTML. Why not visit his profile?",
+          "HTML is essential! Have you seen Olivia's work with it?",
+          "HTML is fascinating! Check out Mia's profile for some amazing HTML projects."
+        ],
+        "context_set": ""
+      },
+      {
+        "tag": "css",
+        "patterns": [
+          "css",
+          "What is CSS?",
+          "Tell me about CSS",
+          "Why should I learn CSS?"
+        ],
+        "responses": [
+          "CSS brings style to the web. I hear that Noah is great with it. Check out his profile!",
+          "I hear that Ava is proficient in CSS. Why not visit her profile?",
+          "CSS is powerful! Have you seen Liam's work with it?",
+          "CSS is fascinating! Check out Olivia's profile for some amazing CSS projects."
+        ],
+        "context_set": ""
+      },
+      {
+        "tag": "sql",
+        "patterns": [
+          "sql",
+          "What is SQL?",
+          "Tell me about SQL",
+          "Why should I learn SQL?"
+        ],
+        "responses": [
+          "SQL is essential for database interactions. I hear that Mia is great with it. Check out her profile!",
+          "I hear that Ethan is skilled in SQL. Why not visit his profile?",
+          "SQL is powerful! Have you seen Olivia's work with it?",
+          "SQL is fascinating! Check out Noah's profile for some amazing SQL projects."
+        ],
+        "context_set": ""
+      },
+      {
+        "tag": "typescript",
+        "patterns": [
+          "typescript",
+          "What is TypeScript?",
+          "Tell me about TypeScript",
+          "Why should I learn TypeScript?"
+        ],
+        "responses": [
+          "TypeScript adds types to JavaScript. I hear that Ava is great with it. Check out her profile!",
+          "I hear that Liam is skilled in TypeScript. Why not visit his profile?",
+          "TypeScript is powerful! Have you seen Mia's work with it?",
+          "TypeScript is fascinating! Check out Ethan's profile for some amazing TypeScript projects."
+        ],
+        "context_set": ""
+      },
+      {
+        "tag": "front end developer",
+        "patterns": [
+          "front end developer",
+          "What does a front end developer do?",
+          "Tell me about front end development",
+          "What skills do I need to be a front end developer?"
+        ],
+        "responses": [
+          "Front end developers focus on the user interface and user experience."
+        ],
+        "context_set": ""
+      },
+      {
+        "tag": "back end developer",
+        "patterns": [
+          "back end developer",
+          "What does a back end developer do?",
+          "Tell me about back end development",
+          "What skills do I need to be a back end developer?"
+        ],
+        "responses": [
+          "Back end developers work on server-side logic and databases."
+        ],
+        "context_set": ""
+      },
+      {
+        "tag": "full stack developer",
+        "patterns": [
+          "full stack developer",
+          "What does a full stack developer do?",
+          "Tell me about full stack development",
+          "What skills do I need to be a full stack developer?"
+        ],
+        "responses": [
+          "Full stack developers handle both front end and back end development."
+        ],
+        "context_set": ""
+      },
+      {
+        "tag": "mobile developer",
+        "patterns": [
+          "mobile developer",
+          "What does a mobile developer do?",
+          "Tell me about mobile development",
+          "What skills do I need to be a mobile developer?"
+        ],
+        "responses": [
+          "Mobile developers focus on creating applications for mobile devices."
+        ],
+        "context_set": ""
+      }
+    ]
+  }
+}
