@@ -62,47 +62,85 @@ module.exports = function(app, SiteData) {
           if (err) {
               console.error('Error retrieving user posts:', err);
               res.status(500).send('Internal Server Error');
+           
               return;
           }
           
           let newData = Object.assign({}, SiteData, {urPosts: userPosts});
           res.render("urposts.ejs", newData)
+         
       });
     });
 
+
+    const nodemailer = require('nodemailer');
     //register below
     app.get('/register', function (req,res) {
         res.render('register.ejs', SiteData);                                                                     
+    });
+     // Configure Nodemailer
+    let transporter = nodemailer.createTransport({
+      service: 'Gmail', 
+      auth: {
+          user: 'kebabm4@gmail.com',
+          pass: 'kgbt uhru njkk hogz'
+      }
     });                                                                                                 
-    app.post('/registered', [check('email').isEmail()],check('password').isLength({ min: 8 }).withMessage('Your password is too short make it at least 8 characters long'), function (req, res) {
+    app.post('/registered', [
+      check('email').isEmail(),
+      check('password').isLength({ min: 8 }).withMessage('Your password is too short make it at least 8 characters long')
+  ], function (req, res) {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-          res.redirect('./register'); }
-      else { 
-    const bcrypt = require('bcrypt');
-    const saltRounds = 10;
-    const plainPassword = req.body.password;
-    
-    bcrypt.hash(plainPassword, saltRounds, function(err, hashedPassword) {
-        // Store hashed password in your database.
-        let sqlquery = "INSERT INTO userinfo (username, firstname, lastname, email, hashedPassword) VALUES (?,?,?,?,?)";
-        // execute sql query
-        let newrecord = [req.sanitize(req.body.username), req.sanitize(req.body.first),req.sanitize(req.body.last), req.sanitize(req.body.email),hashedPassword];
-        db.query(sqlquery, newrecord, (err, result) => {
-          if (err) {
-            return res.status(500).send('username taken try again.');
-          }
-          if (result.length > 0) {
-            return res.send('User already taken try again');
-        }
-          else{
-          result = 'Hello '+ req.sanitize(req.body.first) + ' '+ req.sanitize(req.body.last) +' you are now registered!  We will send an email to you at ' + req.sanitize(req.body.email);
-          res.send(result);
-        }
+          return res.redirect('./register');
+      } else {
+          const saltRounds = 10;
+          const plainPassword = req.body.password;
+          const bcrypt = require('bcrypt');
+        
+          
+          bcrypt.hash(plainPassword, saltRounds, function (err, hashedPassword) {
+              if (err) {
+                  return res.status(500).send('Error hashing password');
+              }
+              
+              let sqlquery = "INSERT INTO userinfo (username, firstname, lastname, email, hashedPassword) VALUES (?,?,?,?,?)";
+              let newrecord = [req.sanitize(req.body.username), req.sanitize(req.body.first), req.sanitize(req.body.last), req.sanitize(req.body.email), 
+                  hashedPassword
+              ];
+              
+              db.query(sqlquery, newrecord, (err, result) => {
+                  if (err) {
+                      return res.status(500).send('Username taken, try again.');
+                  }
+                  
+                  if (result.affectedRows > 0) {
+                     //email contents
+                      let mailOptions = {
+                          from: 'kebabm4@gmail.com',
+                          to: req.sanitize(req.body.email),
+                          subject: 'Registration to Student Zone',
+                          text: `Hey there ${req.sanitize(req.body.first)} ${req.sanitize(req.body.last)},
+                                 \n\nThanks for registering with Student Zone. Confirmation of youre username follows: ${req.sanitize(req.body.username)}.
+                                 \n\nPlease use this when logging in or deleting youre account as well as updating credentials!
+                                 \n\nBest regards,\nStudent Zone`
+                      };
+                      
+                      // send email
+                      transporter.sendMail(mailOptions, (error, info) => {
+                          if (error) {
+                              return res.status(500).send('Registration successful, but failed to send email.');
+                          }
+                          //confirmation of email sent
+                          res.send(`Hello ${req.sanitize(req.body.first)} ${req.sanitize(req.body.last)}, you are now registered! We have sent an email to ${req.sanitize(req.body.email)}`);
+                      });
+                  } else {
+                      res.send('User registration failed, please try again.');
+                  }
+              });
           });
-    })
       }
-    });
+  });
 
     //login
 app.get('/login', function (req,res) {
