@@ -1,9 +1,7 @@
-
-
   <!doctype html>
 <html>
   <head>
-    <title>Youre posts <%=WebsiteName%></title>
+    <title>Your posts <%=WebsiteName%></title>
     <link rel="stylesheet"  type="text/css" href="/main.css" />
   </head>
   <body>
@@ -13,18 +11,28 @@
             <ul>
                 <% urPosts.forEach(function(post) { %>
                     <li>
-                        <strong>Name:</strong> <%= post.name %><br>
-                        <strong>Description:</strong> <%= post.description %><br>
-                        <strong>Requirements:</strong> <%= post.requirements %><br>
-                        <strong>Looking For:</strong> <%= post.lookingfor %><br>
-                        <strong>Time Frame:</strong> <%= post.timeframe %><br>
-                        <strong>Start Date:</strong> <%= post.startdate %>
+                        <form action="/updatepost/<%= post.id %>" method="post">
+                            <label for="name_<%= post.id %>">Name:</label>
+                            <input type="text" id="name_<%= post.id %>" name="name" value="<%= post.name %>"><br>
+                            <label for="description_<%= post.id %>">Description:</label>
+                            <textarea id="description_<%= post.id %>" name="description"><%= post.description %></textarea><br>
+                            <label for="requirements_<%= post.id %>">Requirements:</label>
+                            <textarea id="requirements_<%= post.id %>" name="requirements"><%= post.requirements %></textarea><br>
+                            <label for="lookingfor_<%= post.id %>">Looking For:</label>
+                            <input type="text" id="lookingfor_<%= post.id %>" name="lookingfor" value="<%= post.lookingfor %>"><br>
+                            <label for="timeframe_<%= post.id %>">Time Frame:</label>
+                            <input type="date" id="timeframe_<%= post.id %>" name="timeframe" value="<%= post.timeframe.toISOString().split('T')[0] %>"><br>
+                            <label for="startdate_<%= post.id %>">Start Date:</label>
+                            <input type="date" id="startdate_<%= post.id %>" name="startdate" value="<%= post.startdate.toISOString().split('T')[0] %>"><br>
+                            <button type="submit">Update Post</button>
+                        </form>
                     </li>
                 <% }); %>
             </ul>
         <% } else { %>
             <p>You have no posts yet.</p>
         <% } %>
-      </div>
+    </div>
   </body>
+  <!-- https://www.w3schools.com/tags/tag_textarea.asp used for textarea to make it more readable and a better interface. Later could add collumns and rows to make it mroe exact if more posts are added. -->
 </html>

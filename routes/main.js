@@ -18,7 +18,7 @@ module.exports = function(app, SiteData) {
 
     });
 
-    app.get('/addpost', function (req, res) {
+    app.get('/addpost',redirectLogin, function (req, res) {
         res.render('addpost.ejs', SiteData);
      });
  
@@ -349,6 +349,28 @@ app.get('/logout', redirectLogin, (req,res) => {
 //   res.render('index', { response: body });
 // });
 
+app.post('/updatepost/:id', redirectLogin, (req, res) => {
+  const postId = req.params.id;
+  //https://stackoverflow.com/questions/47066555/remove-time-after-converting-date-toisostring used for .toisostring.split otherwise update doesn't work on this
+  let updatedPost = [
+      req.sanitize(req.body.name),
+      req.sanitize(req.body.description),
+      req.sanitize(req.body.requirements),
+      req.sanitize(req.body.lookingfor),
+      req.sanitize(new Date(req.body.timeframe).toISOString().split('T')[0]),
+      req.sanitize(new Date(req.body.startdate).toISOString().split('T')[0]), 
+      postId
+  ];
+  let sqlquery = "UPDATE groupfinder SET name = ?, description = ?, requirements = ?, lookingfor = ?, timeframe = ?, startdate = ? WHERE id = ?";
+  db.query(sqlquery, updatedPost, (err, result) => {
+      if (err) {
+          console.error('Error maybe try some other perapeters:', err);
+          res.status(500).send('Internal Server Error');
+          return;
+      }
+      res.redirect('/listposts');
+  });
+});
 
 
 
