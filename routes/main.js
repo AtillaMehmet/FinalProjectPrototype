@@ -28,7 +28,7 @@ module.exports = function(app, SiteData) {
             const username = req.session.userId
            let sqlquery = "INSERT INTO groupfinder (name,description,requirements,lookingfor,timeframe,startdate,group_size,username) VALUES (?,?,?,?,?,?,?,?)";
            // execute sql query
-           //req.sanitize and body is fine for decription and requirements but not username or somet5hing that is being added.
+           //req.sanitize and body is fine for decription and requirements but not username or something that is being added.
            let newrecord = [req.sanitize(req.body.name), req.sanitize(req.body.description),req.sanitize(req.body.requirements), req.sanitize(req.body.lookingfor),req.sanitize(req.body.timeframe),req.sanitize(req.body.startdate),req.sanitize(req.body.group_size),  username];
            db.query(sqlquery, newrecord, (err, result) => {
              if (err) {
@@ -166,7 +166,7 @@ app.get('/login', function (req,res) {
               }
               else if (result == true) {
                 req.session.userId = req.sanitize(req.body.username);
-                res.send('You have logged in, ' + (req.sanitize(req.body.username)) + 'Welcome' + '<a href='+'./'+'>Home</a>');
+                res.send('You have logged in, ' + (req.sanitize(req.body.username)) + ' Welcome ' + ' <a href='+'./'+'>Home</a>');
               }
               else {
                 res.send('User Details not recognised');
@@ -179,14 +179,14 @@ app.get('/login', function (req,res) {
 
 //search
 app.get('/search-result', [check('keyword').isLength({ min: 1 })], function(req, res) {
-  const searchKeyword = req.query.keyword;  // Assuming keyword is passed as a query parameter
+  const searchKeyword = req.query.keyword;  
   if (!searchKeyword) {
       res.status(400).send("Keyword is required.");
       return;
   }
 
-  let query = 'SELECT * FROM groupfinder WHERE lookingfor LIKE ?';// Ensure correct column name 'lookingfor'
-  const keysearch = `%${searchKeyword}%`;  // Correct usage of template literals
+  let query = 'SELECT * FROM groupfinder WHERE lookingfor LIKE ?';
+  const keysearch = `%${searchKeyword}%`; 
 
   console.log("Final SQL Query:", query);
   console.log("Using search keyword: ", keysearch);
@@ -372,7 +372,16 @@ app.post('/updatepost/:id', redirectLogin, (req, res) => {
   });
 });
 
+app.post('/deletepost/:id', redirectLogin, (req, res) => {
+  const postId = req.params.id;
+  let sqlquery = "DELETE FROM groupfinder WHERE id = ?";
+  db.query(sqlquery, [postId], (err, result) => {                                                                                                                                                       
+      if (err) {
+          console.error('Error deleting post:', err);
+          res.status(500).send('Internal Server Error');
+          return;
+      }                                                                                                                                                                                                 
+  });                                                                                                                                                                                                   
+});                                                                                                                                                                                                       
+};     
 
-
-
-}

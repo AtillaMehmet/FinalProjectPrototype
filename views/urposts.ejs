@@ -7,27 +7,32 @@
   <body>
     <div class="user-posts">
         <h2>Your Posts</h2>
+        <p><a href="/">Click here to to back to the home page</a></p>
         <% if (urPosts.length > 0) { %>
             <ul>
                 <% urPosts.forEach(function(post) { %>
                     <li>
-                        <form action="/updatepost/<%= post.id %>" method="post">
-                            <label for="name_<%= post.id %>">Name:</label>
-                            <input type="text" id="name_<%= post.id %>" name="name" value="<%= post.name %>"><br>
-                            <label for="description_<%= post.id %>">Description:</label>
-                            <textarea id="description_<%= post.id %>" name="description"><%= post.description %></textarea><br>
-                            <label for="requirements_<%= post.id %>">Requirements:</label>
-                            <textarea id="requirements_<%= post.id %>" name="requirements"><%= post.requirements %></textarea><br>
-                            <label for="lookingfor_<%= post.id %>">Looking For:</label>
-                            <input type="text" id="lookingfor_<%= post.id %>" name="lookingfor" value="<%= post.lookingfor %>"><br>
-                            <label for="timeframe_<%= post.id %>">Time Frame:</label>
-                            <input type="date" id="timeframe_<%= post.id %>" name="timeframe" value="<%= post.timeframe.toISOString().split('T')[0] %>"><br>
-                            <label for="startdate_<%= post.id %>">Start Date:</label>
-                            <input type="date" id="startdate_<%= post.id %>" name="startdate" value="<%= post.startdate.toISOString().split('T')[0] %>"><br>
-                            <button type="submit">Update Post</button>
-                        </form>
-                    </li>
-                <% }); %>
+                      <form action="/updatepost/<%= post.id %>" method="post">                                                                                                                              
+                        <label for="name_<%= post.id %>">Name:</label>                                                                                                                                    
+                        <input type="text" id="name_<%= post.id %>" name="name" value="<%= post.name %>"><br>                                                                                             
+                        <label for="description_<%= post.id %>">Description:</label>                                                                                                                      
+                        <textarea id="description_<%= post.id %>" name="description"><%= post.description %></textarea><br>                                                                               
+                        <label for="requirements_<%= post.id %>">Requirements:</label>                                                                                                                    
+                        <textarea id="requirements_<%= post.id %>" name="requirements"><%= post.requirements %></textarea><br>                                                                            
+                        <label for="lookingfor_<%= post.id %>">Looking For:</label>                                                                                                                       
+                        <input type="text" id="lookingfor_<%= post.id %>" name="lookingfor" value="<%= post.lookingfor %>"><br>                                                                           
+                        <label for="timeframe_<%= post.id %>">Time Frame:</label>                                                                                                                         
+                        <input type="date" id="timeframe_<%= post.id %>" name="timeframe" value="<%= post.timeframe.toISOString().split('T')[0] %>"><br>                                                  
+                        <label for="startdate_<%= post.id %>">Start Date:</label>                                                                                                                         
+                        <input type="date" id="startdate_<%= post.id %>" name="startdate" value="<%= post.startdate.toISOString().split('T')[0] %>"><br>                                                  
+                        <button type="submit">Update Post</button>                                                                                                                                        
+                    </form>                                                                                                                                                                               
+                    <form action="/deletepost/<%= post.id %>" method="POST" style="display:inline;">                                                                                                      
+                    <button type="submit">Delete</button>                                                                                                                                                 
+                </li>                                                                                                                                                                                     
+                                                                                                                                                                                                          
+            <% }); %>                                                                                                                                                                                     
+        </form>  
             </ul>
         <% } else { %>
             <p>You have no posts yet.</p>
