@@ -4,4 +4,4 @@ Initial  MVP is still similar to before and that is a web application that can 
 
 This project has passed the level of the MVP due to the development of the NLP chatbot and finding success in getting responses from user queries with this technology that I have newly researched specifically for this project. The main feedback so far has been positive and I look forward to updating this project further in the future. I would also like to thank all those involved throughout the process of this project and that it has been a fun journey as I have developed new skills along the way.
 
-I would like to acknowledge the use of chatgpt to create an initial dataset which I later changed and expanded with the permission of my supervisor. The gpt version was not used in the final code i used my own version for this.
+I would like to acknowledge the use of chatgpt to create an initial dataset which I later changed and expanded with the permission of my supervisor.
