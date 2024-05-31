@@ -185,7 +185,7 @@ app.get('/search-result', [check('keyword').isLength({ min: 1 })], function(req,
       return;
   }
 
-  let query = 'SELECT * FROM groupfinder WHERE lookingfor LIKE ?';
+  let query = 'SELECT * FROM groupfinder WHERE name LIKE ?';
   const keysearch = `%${searchKeyword}%`; 
 
   console.log("Final SQL Query:", query);
